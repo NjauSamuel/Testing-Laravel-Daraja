@@ -10,7 +10,18 @@
     <div class="rounded-md border border-slate-300 bg-white p-4 shadow-sm">
       <h2 class="text-xl font-semibold text-gray-800 mb-4">Obtain Access Token</h2>
 
-      <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md">Request Access Token!</button>
+      <form action="{{ route('mpesa-get-token') }}" method="post">
+        @csrf
+        <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md" type="submit">Request Access Token!</button>
+      </form>
+
+      @if(isset($responseData))
+          <h4>Access Token: {{ $responseData['access_token'] }}</h4>
+          <h4>Expires In: {{ $responseData['expires_in'] }} seconds</h4>
+      @else
+          <h4>No Access Token Available</h4>
+      @endif
+
     </div>
 
     <div class="rounded-md border border-slate-300 bg-white p-4 shadow-sm mt-5">
