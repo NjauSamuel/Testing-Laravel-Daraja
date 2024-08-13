@@ -25,8 +25,10 @@
 
     <div class="rounded-md border border-slate-300 bg-white p-4 shadow-sm mt-5">
       <h2 class="text-xl font-semibold text-gray-800 mb-4">Register URL!</h2>
-
-      <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md">Register URL's</button>
+      <form action="{{ route('mpesa-register-urls') }}" method="post">
+        @csrf
+        <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md">Register URL's</button>
+      </form>
     </div>
 
     <div class="rounded-md border border-slate-300 bg-white p-4 shadow-sm mt-5">

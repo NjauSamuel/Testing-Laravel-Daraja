@@ -13,3 +13,5 @@ Route::post('/', function(MpesaController $mpesaController){
 })->name('home');
 
 Route::post('get-token', [MpesaController::class, 'getAccessToken'])->name('mpesa-get-token');
+
+Route::post('register-urls', [MpesaController::class, 'registerURLS'])->name('mpesa-register-urls');

@@ -34,6 +34,11 @@ class MpesaController extends Controller
         }
 
         curl_close($curl);
+
+        // Check if the response is empty
+        if (empty($response)) {
+            dd("Empty response received from the API.");
+        }
         
         $responseData = json_decode($response, true); // Decode the JSON response into an array
 
@@ -50,10 +55,36 @@ class MpesaController extends Controller
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); 
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, \json_encode($body));
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false );
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
        
         $curl_response = curl_exec($curl);
         \curl_close($curl);
 
         return $curl_response;
+    }
+
+    /*
+    *Register URL
+    */
+
+    public function registerURLS(){   
+
+        $url = env('MPESA_ENV') === '0'
+        ? 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl' 
+        : 'https://api.safaricom.co.ke/mpesa/c2b/v1/registerurl';
+
+
+        $body = array( 
+            'ShortCode' => env('MPESA_SHORTCODE'),
+            'ResponseType' => 'Completed',
+            'ConfirmationURL' => env('MPESA_TEST_URL') . '/api/confirmation', 
+            'ValidationURL' => env('MPESA_TEST_URL') . '/api/validation'
+        );
+
+        $response = $this->makeHttp($url, $body);
+
+        dump($response);
+        return $response;
     }
 }
