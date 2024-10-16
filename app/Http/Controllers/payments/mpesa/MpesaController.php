@@ -8,9 +8,7 @@ use Illuminate\Http\Request;
 class MpesaController extends Controller
 {
     public function getAccessToken(){
-        $url = env('MPESA_ENV') === '0'
-        ? 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials' 
-        : 'https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials';
+        $url = 'https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials';
 
         $curl = curl_init($url);
         curl_setopt_array(
@@ -78,8 +76,8 @@ class MpesaController extends Controller
         $body = array( 
             'ShortCode' => env('MPESA_SHORTCODE'),
             'ResponseType' => 'Completed',
-            'ConfirmationURL' => env('MPESA_TEST_URL') . '/api/confirmation', 
-            'ValidationURL' => env('MPESA_TEST_URL') . '/api/validation'
+            'ConfirmationURL' => env('MPESA_PRODUCTION_URL') . '/api/confirmation', 
+            'ValidationURL' => env('MPESA_PRODUCTION_URL') . '/api/validation'
         );
 
         $response = $this->makeHttp($url, $body);
